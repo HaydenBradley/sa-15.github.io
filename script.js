@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const nextBtn = document.getElementById('nextBtn');
     let currentItemIndex = 0;
 
-    portfolioItems[currentItemIndex].style.display = 'block';
+    displayPortfolioItem(currentItemIndex);
 
     filterBtns.forEach(btn => {
         btn.addEventListener('click', function(e) {
@@ -13,9 +13,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const category = this.getAttribute('href').slice(1);
             filterPortfolio(category);
             toggleActiveClass(this);
+            currentItemIndex = 0;
+            displayPortfolioItem(currentItemIndex);
         });
     });
-
     prevBtn.addEventListener('click', function() {
         navigatePortfolio(-1);
     });
@@ -42,14 +43,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function navigatePortfolio(direction) {
         portfolioItems[currentItemIndex].style.display = 'none';
-
         currentItemIndex += direction;
         if (currentItemIndex < 0) {
             currentItemIndex = portfolioItems.length - 1;
         } else if (currentItemIndex >= portfolioItems.length) {
             currentItemIndex = 0;
         }
+        displayPortfolioItem(currentItemIndex);
+    }
 
-        portfolioItems[currentItemIndex].style.display = 'block';
+    function displayPortfolioItem(index) {
+        portfolioItems[index].style.display = 'block';
     }
 });
